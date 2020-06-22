@@ -41,20 +41,16 @@ def solution_to_array(data, manager, routing, solution):
     solut = [None] * len(data)
     for vehicle_id in range(data['num_vehicles']):
         index = routing.Start(vehicle_id)
-        #plan_output = 'Route for vehicle {}:\n'.format(vehicle_id)
         route_distance = 0
         
         solut[vehicle_id] = []
         while not routing.IsEnd(index):
-            #plan_output += ' {} -> '.format(manager.IndexToNode(index))
             solut[vehicle_id].append(manager.IndexToNode(index))
             previous_index = index
             index = solution.Value(routing.NextVar(index))
             route_distance += routing.GetArcCostForVehicle(
                 previous_index, index, vehicle_id)
-        #plan_output += '{}\n'.format(manager.IndexToNode(index))
         solut[vehicle_id].append(manager.IndexToNode(index))
-        #plan_output += 'Distance of the route: {}m\n'.format(route_distance) 
       
     return solut,route_distance
 
@@ -119,11 +115,11 @@ class VRP:
     
         # Setting first solution heuristic.
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-        search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
-        search_parameters.local_search_metaheuristic = (
-            strategy)
+        #search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+        search_parameters.local_search_metaheuristic = (strategy)
         search_parameters.time_limit.seconds = timeout
-        search_parameters.log_search = True
+        #search_parameters.lns_time_limit.seconds = timeout
+        search_parameters.log_search = True  
 
     
         # Solve the problem.
