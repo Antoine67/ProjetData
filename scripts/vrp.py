@@ -59,11 +59,14 @@ def solution_to_array(data, manager, routing, solution):
     return solut,route_distance
 
 class VRP:
+    
+    data = None
+    
     def __init__(self, nb_camions,nb_villes, depot=0):
         self.k = nb_camions
         self.towns_nb = nb_villes
         self.depot = depot
-        self.data = self.create_data_model()
+       
         
     def create_data_model(self):
        
@@ -71,7 +74,14 @@ class VRP:
         data['distance_matrix'] = random_adjacency_matrix(self.towns_nb)
         data['num_vehicles'] = self.k
         data['depot'] = self.depot 
-        return data
+        self.data = data
+        
+    def pass_matrix(self, matrix):
+        data = {}
+        data['distance_matrix'] = matrix
+        data['num_vehicles'] = self.k
+        data['depot'] = self.depot 
+        self.data = data
         
     def solve(self, strategy, timeout):
     

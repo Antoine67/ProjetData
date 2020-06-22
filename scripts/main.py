@@ -6,7 +6,7 @@ Created on Mon Jun 22 15:00:48 2020
 """
 
 from vrp import VRP
-#from cvrp import CVRP
+from cvrp import CVRP
 from ortools.constraint_solver import routing_enums_pb2 
 
 import networkx as nx
@@ -21,27 +21,26 @@ algos = [
    routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING,
          ]
 def main():
-    
+    # VRP
     vrp = VRP(nb_camions,nb_villes)
+    vrp.create_data_model()
+    #vrp.pass_matrix(matrix)
     print(vrp.data)
     
-    #Display graph
+    # CVRP
+    # TODO
+    #cvrp = CVRP(nb_camions,nb_villes)
+    #cvrp.create_data_model()
+    
+    # Display graph
     G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     nx.draw_circular(G, with_labels=True)
         
     for strategy in algos:
-        #VRP
-       
         solution = vrp.solve(strategy, timeout)
-       
+        #solution = cvrp.solve(strategy, timeout)
         print(solution)
         
-        
-        
-        #CVRP
-
-
-
 
 if __name__ == '__main__':
     main()
