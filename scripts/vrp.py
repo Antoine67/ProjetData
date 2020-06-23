@@ -41,7 +41,6 @@ def solution_to_array(data, manager, routing, solution):
     solut = [None] * data['num_vehicles']
     
     route_distance = 0
-    
     for vehicle_id in range(data['num_vehicles']):
         index = routing.Start(vehicle_id)
 
@@ -50,9 +49,10 @@ def solution_to_array(data, manager, routing, solution):
             solut[vehicle_id].append(manager.IndexToNode(index))
             previous_index = index
             index = solution.Value(routing.NextVar(index))
+
             route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
+
         solut[vehicle_id].append(manager.IndexToNode(index))
-      
     return solut,route_distance
 
 class VRP:
@@ -121,7 +121,7 @@ class VRP:
         search_parameters.time_limit.seconds = timeout
         #search_parameters.lns_time_limit.seconds = timeout
         search_parameters.log_search = True  
-        search_parameters.solution_limit = 100
+        #search_parameters.solution_limit = 1000
 
     
         # Solve the problem.
