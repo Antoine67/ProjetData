@@ -1,24 +1,42 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 23 11:16:24 2020
-
-@author: leodi
-"""
-
 #Import pymongo to connect to database
 from pymongo import MongoClient
+import matplotlib.pyplot as plt
+import numpy as np
 
 #Localhost
 client = MongoClient('localhost', 27017)
 
 #Get database and vehicules collection
 db = client["DataProject"]
-resolved_instances = db["resolved_instances"]
+stats = db["stats"]
 
-#Only take a few result
-results = resolved_instances.find().limit(5)
 
-#Display the result:
-for v in results:
-  print(v) 
+def insert_stats(x,y, name, x_label="", y_label=""):
+    dict_stats_points = {
+        'name':name,
+        'x':x,
+        'y':y,
+        "x_label":x_label,
+        "y_label":y_label
+    }
+    
+    stats.insert_one(dict_stats_points)
 
+
+def get_stats(name):
+    return stats.find({ "name": name});
+
+
+def show_stats(name):
+    stat = get_stats(name)[0]
+    x = stat['x']
+    y = stat['y']
+    plt.plot(x, y)
+    plt.show()
+
+'''
+if __name__ == '__main__':
+    insert_stats([1,2,3,4,5],[4,8,7,54,4], 'test')
+    print(get_stats('test')[0])
+    show_stats("test")
+'''
