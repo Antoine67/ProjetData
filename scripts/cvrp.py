@@ -159,9 +159,9 @@ class CVRP:
 
         # Setting first solution heuristic.
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-        search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+        #search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
 
-        #search_parameters.local_search_metaheuristic = (strategy)
+        search_parameters.local_search_metaheuristic = (strategy)
         search_parameters.time_limit.seconds = timeout
         search_parameters.log_search = True
         

@@ -57,10 +57,7 @@ def main():
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     #nx.draw(G, with_labels=True)
     
-    print(coords)
-    plt.matshow(coords[]));
-    plt.colorbar()
-    plt.show()
+
     
     for strategy in algos:
         #solution = vrp.solve(strategy, timeout)
