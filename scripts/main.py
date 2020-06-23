@@ -38,7 +38,8 @@ def main():
     # VRP
     vrp = VRP(nb_camions,nb_villes)
     #vrp.create_data_model()
-    vrp.pass_matrix(from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp'))
+    mat, capacity, citites_nb,vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    vrp.pass_matrix(mat)
     print(vrp.data)
     
     # CVRP
