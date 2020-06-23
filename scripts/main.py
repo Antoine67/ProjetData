@@ -10,14 +10,15 @@ from cvrp import CVRP
 from ortools.constraint_solver import routing_enums_pb2
 from load_data import from_file_to_adj_matr
 
-import networkx as nx
+#import networkx as nx
 
 
 import numpy as np
 import json 
+import matplotlib.pyplot as plt
 
 nb_camions = 5
-nb_villes = 32
+nb_villes = 17
 timeout = 15 # in s
 
 """
@@ -35,30 +36,35 @@ algos = [
 ]
 
 def main():
-    
-    
-    mat, capacity, cities_nb, vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
+
+    mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     
     # VRP
-    vrp = VRP(vehicules_nb,cities_nb)
+    #vrp = VRP(vehicules_nb,cities_nb)
     #vrp.create_data_model()
     
-    vrp.pass_matrix(mat)
-    print(vrp.data)
+    #vrp.pass_matrix(mat)
+    #print(vrp.data)
     
     # CVRP
     # TODO
-    #cvrp = CVRP(nb_camions,nb_villes)
+    cvrp = CVRP(vehicules_nb,cities_nb)
     #cvrp.create_data_model()
-    
+    cvrp.pass_matrix(mat, demand_matrix,capacity)
+    print(cvrp.data)
     
     # Display graph
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     #nx.draw(G, with_labels=True)
     
+    print(coords)
+    plt.matshow(coords[]));
+    plt.colorbar()
+    plt.show()
+    
     for strategy in algos:
-        solution = vrp.solve(strategy, timeout)
-        #solution = cvrp.solve(strategy, timeout)
+        #solution = vrp.solve(strategy, timeout)
+        solution = cvrp.solve(strategy, timeout)
         print(solution)
     
 

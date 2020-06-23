@@ -1,96 +1,62 @@
-from __future__ import print_function
-
 """Capacited Vehicles Routing Problem (CVRP)."""
 
-from load_data import from_file_to_adj_matr
-
+from __future__ import print_function
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
+from random import randrange
 
+"""Random adjacency matrix of given size"""
+def random_adjacency_matrix(length, minWeight = 1, maxWeight = 10):
+    mat = np.random.randint(minWeight,maxWeight+1,(length,length))
+    for i,arr in enumerate(mat):
+        arr[i] = 0
+    return mat
 
-def create_data_model():
-    """Stores the data for the problem."""
-    data = {}
-    data['distance_matrix'] = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
-    """[
-        [
-            0, 548, 776, 696, 582, 274, 502, 194, 308, 194, 536, 502, 388, 354,
-            468, 776, 662
-        ],
-        [
-            548, 0, 684, 308, 194, 502, 730, 354, 696, 742, 1084, 594, 480, 674,
-            1016, 868, 1210
-        ],
-        [
-            776, 684, 0, 992, 878, 502, 274, 810, 468, 742, 400, 1278, 1164,
-            1130, 788, 1552, 754
-        ],
-        [
-            696, 308, 992, 0, 114, 650, 878, 502, 844, 890, 1232, 514, 628, 822,
-            1164, 560, 1358
-        ],
-        [
-            582, 194, 878, 114, 0, 536, 764, 388, 730, 776, 1118, 400, 514, 708,
-            1050, 674, 1244
-        ],
-        [
-            274, 502, 502, 650, 536, 0, 228, 308, 194, 240, 582, 776, 662, 628,
-            514, 1050, 708
-        ],
-        [
-            502, 730, 274, 878, 764, 228, 0, 536, 194, 468, 354, 1004, 890, 856,
-            514, 1278, 480
-        ],
-        [
-            194, 354, 810, 502, 388, 308, 536, 0, 342, 388, 730, 468, 354, 320,
-            662, 742, 856
-        ],
-        [
-            308, 696, 468, 844, 730, 194, 194, 342, 0, 274, 388, 810, 696, 662,
-            320, 1084, 514
-        ],
-        [
-            194, 742, 742, 890, 776, 240, 468, 388, 274, 0, 342, 536, 422, 388,
-            274, 810, 468
-        ],
-        [
-            536, 1084, 400, 1232, 1118, 582, 354, 730, 388, 342, 0, 878, 764,
-            730, 388, 1152, 354
-        ],
-        [
-            502, 594, 1278, 514, 400, 776, 1004, 468, 810, 536, 878, 0, 114,
-            308, 650, 274, 844
-        ],
-        [
-            388, 480, 1164, 628, 514, 662, 890, 354, 696, 422, 764, 114, 0, 194,
-            536, 388, 730
-        ],
-        [
-            354, 674, 1130, 822, 708, 628, 856, 320, 662, 388, 730, 308, 194, 0,
-            342, 422, 536
-        ],
-        [
-            468, 1016, 788, 1164, 1050, 514, 514, 662, 320, 274, 388, 650, 536,
-            342, 0, 764, 194
-        ],
-        [
-            776, 868, 1552, 560, 674, 1050, 1278, 742, 1084, 810, 1152, 274,
-            388, 422, 764, 0, 798
-        ],
-        [
-            662, 1210, 754, 1358, 1244, 708, 480, 856, 514, 468, 354, 844, 730,
-            536, 194, 798, 0
-        ],
-    ]"""
-    data['demands'] = [0, 19, 21, 6, 19, 7 ,12,16,6,16,8,14,21,16,3,22,18,19,1,24,8,12,4,8,24,24,2,20,15,2,14,9]
-    data['vehicle_capacities'] = [100, 100, 100, 100, 100]
-    data['num_vehicles'] = 5
-    data['depot'] = 0
-    return data
+def random_weights(length, minWeight = 1, maxWeight = 10):
+        returnArray = []
+        returnArray.append(0)
+        for i in range(length-1):
+            returnArray.append(randrange(minWeight,maxWeight))
+        return returnArray
 
-class CVRP:
-    def solve(self, strategy):
-        return 'hello world'
+def random_vehiculs(length, arrayIn, minWeight = 0, maxWeight = 0):
+        returnArray = []
+        if minWeight == 0:
+            print("Poids minimum non défini")
+
+        if maxWeight == 0:
+            print("Poids maximum non défini")
+
+        if minWeight <= int(sum(arrayIn)/length):
+            print("La somme des poids des demandes est supérieurs à la capacité des camions")
+            minWeight = int(sum(arrayIn)/length) + 1
+
+        if maxWeight <= minWeight:
+            maxWeight = minWeight + 10
+            
+        tempRandom = randrange(minWeight,maxWeight)
+        for i in range(length):
+            returnArray.append(tempRandom)
+        return returnArray
+
+def solution_to_array(data, manager, routing, solution):
+    solut = [None] * data['num_vehicles']
+    
+    route_distance = 0
+    for vehicle_id in range(data['num_vehicles']):
+        index = routing.Start(vehicle_id)
+
+        solut[vehicle_id] = []
+        while not routing.IsEnd(index):
+            solut[vehicle_id].append(manager.IndexToNode(index))
+            previous_index = index
+            index = solution.Value(routing.NextVar(index))
+
+            route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
+
+        solut[vehicle_id].append(manager.IndexToNode(index))
+    return solut,route_distance
+
 def print_solution(data, manager, routing, solution):
     """Prints solution on console."""
     total_distance = 0
@@ -118,65 +84,93 @@ def print_solution(data, manager, routing, solution):
     print('Total distance of all routes: {}m'.format(total_distance))
     print('Total load of all routes: {}'.format(total_load))
 
-
-def main():
-    """Solve the CVRP problem."""
-    # Instantiate the data problem.
-    data = create_data_model()
-
-    # Create the routing index manager.
-    manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
-                                           data['num_vehicles'], data['depot'])
-
-    # Create Routing Model.
-    routing = pywrapcp.RoutingModel(manager)
-
-
-    # Create and register a transit callback.
-    def distance_callback(from_index, to_index):
-        """Returns the distance between the two nodes."""
-        # Convert from routing variable Index to distance matrix NodeIndex.
-        from_node = manager.IndexToNode(from_index)
-        to_node = manager.IndexToNode(to_index)
-        return data['distance_matrix'][from_node][to_node]
-
-    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
-
-    # Define cost of each arc.
-    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
-
-
-    # Add Capacity constraint.
-    def demand_callback(from_index):
-        """Returns the demand of the node."""
-        # Convert from routing variable Index to demands NodeIndex.
-        from_node = manager.IndexToNode(from_index)
-        return data['demands'][from_node]
-
-    demand_callback_index = routing.RegisterUnaryTransitCallback(
-        demand_callback)
-    routing.AddDimensionWithVehicleCapacity(
-        demand_callback_index,
-        0,  # null capacity slack
-        data['vehicle_capacities'],  # vehicle maximum capacities
-        True,  # start cumul to zero
-        'Capacity')
-
-    # Setting first solution heuristic.
-    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+class CVRP:
     
-    search_parameters.time_limit.seconds = 10
-    search_parameters.local_search_metaheuristic = ( routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH)
+    data = None
+    
+    def __init__(self, nb_camions,nb_villes, depot=0):
+        self.k = nb_camions
+        self.towns_nb = nb_villes
+        self.depot = depot
+       
+        
+    def create_data_model(self):
+       
+        data = {}
+        data['distance_matrix'] = random_adjacency_matrix(self.towns_nb)
+        data['demands'] = list(random_weights(len(data['distance_matrix'])))
+        data['num_vehicles'] = self.k
+        data['vehicle_capacities'] = random_vehiculs(data['num_vehicles'], data['demands'])
+        data['depot'] = self.depot 
+        self.data = data
+        
+    def pass_matrix(self, matrix, demandMatrix, vehiculsCapacity):
+        data = {}
+        data['distance_matrix'] = matrix
+        data['demands'] = demandMatrix
+        data['num_vehicles'] = self.k
+        temp = []
+        for i in range(data['num_vehicles']):
+            temp.append(vehiculsCapacity)
+        data['vehicle_capacities'] = temp
+        data['depot'] = self.depot 
+        self.data = data
+        
+    def solve(self, strategy, timeout):
+    
+        # Create the routing index manager.
+        manager = pywrapcp.RoutingIndexManager(len(self.data['distance_matrix']),
+                                               self.data['num_vehicles'],
+                                               self.data['depot'])
 
-    # Solve the problem.
-    solution = routing.SolveWithParameters(search_parameters)
-
-    # Print solution on console.
-    if solution:
-        print_solution(data, manager, routing, solution)
+        # Create Routing Model.
+        routing = pywrapcp.RoutingModel(manager)
 
 
-if __name__ == '__main__':
-    main()
+        # Create and register a transit callback.
+        def distance_callback(from_index, to_index):
+            """Returns the distance between the two nodes."""
+            # Convert from routing variable Index to distance matrix NodeIndex.
+            from_node = manager.IndexToNode(from_index)
+            to_node = manager.IndexToNode(to_index)
+            return self.data['distance_matrix'][from_node][to_node]
+
+        transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+
+        # Define cost of each arc.
+        routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+
+
+        # Add Capacity constraint.
+        def demand_callback(from_index):
+            """Returns the demand of the node."""
+            # Convert from routing variable Index to demands NodeIndex.
+            from_node = manager.IndexToNode(from_index)
+            return self.data['demands'][from_node]
+
+        demand_callback_index = routing.RegisterUnaryTransitCallback(
+            demand_callback)
+        routing.AddDimensionWithVehicleCapacity(
+            demand_callback_index,
+            0,  # null capacity slack
+            self.data['vehicle_capacities'],  # vehicle maximum capacities
+            True,  # start cumul to zero
+            'Capacity')
+
+        # Setting first solution heuristic.
+        search_parameters = pywrapcp.DefaultRoutingSearchParameters()
+        search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+
+        #search_parameters.local_search_metaheuristic = (strategy)
+        search_parameters.time_limit.seconds = timeout
+        search_parameters.log_search = True
+        
+        # Solve the problem.
+        solution = routing.SolveWithParameters(search_parameters)
+
+        # Print solution on console.
+        if solution:
+            #print_solution(self.data, manager, routing, solution)
+            return solution_to_array(self.data, manager, routing, solution)
+        return None
+    
