@@ -16,6 +16,7 @@ from load_data import get_particular_info
 
 import numpy as np
 import json 
+import matplotlib.pyplot as plt
 
 nb_camions = 5
 nb_villes = 17
@@ -40,8 +41,7 @@ algos = [
 
 def main():
     
-    matricedemande = [0, 19, 21, 6, 19, 7 ,12,16,6,16,8,14,21,16,3,22,18,19,1,24,8,12,4,8,24,24,2,20,15,2,14,9]
-    mat, capacity, cities_nb, vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
 
     if cvrpOrVrp == 'vrp':
@@ -65,7 +65,7 @@ def main():
         if random:
             cvrp.create_data_model()
         else:
-            cvrp.pass_matrix(mat, matricedemande,capacity)
+            cvrp.pass_matrix(mat, demand_matrix,capacity)
         print(cvrp.data)
         
         for strategy in algos:
@@ -74,11 +74,11 @@ def main():
                 print("solution attendu : " + str(cost))
             print("solution obtenu : " + str(solution[1]))
             print(solution)
+
     
     # Display graph
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     #nx.draw(G, with_labels=True)
-    
     
     
 
