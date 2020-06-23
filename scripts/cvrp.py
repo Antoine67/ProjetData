@@ -2,6 +2,7 @@ from __future__ import print_function
 
 """Capacited Vehicles Routing Problem (CVRP)."""
 
+from load_data import  from_file_to_adj_matr
 
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
@@ -10,7 +11,8 @@ from ortools.constraint_solver import pywrapcp
 def create_data_model():
     """Stores the data for the problem."""
     data = {}
-    data['distance_matrix'] = [
+    data['distance_matrix'] = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    """[
         [
             0, 548, 776, 696, 582, 274, 502, 194, 308, 194, 536, 502, 388, 354,
             468, 776, 662
@@ -79,10 +81,10 @@ def create_data_model():
             662, 1210, 754, 1358, 1244, 708, 480, 856, 514, 468, 354, 844, 730,
             536, 194, 798, 0
         ],
-    ]
-    data['demands'] = [0, 1, 1, 2, 4, 2, 4, 8, 8, 1, 2, 1, 2, 4, 4, 8, 8]
-    data['vehicle_capacities'] = [15, 15, 15, 15]
-    data['num_vehicles'] = 4
+    ]"""
+    data['demands'] = [0, 19, 21, 6, 19, 7 ,12,16,6,16,8,14,21,16,3,22,18,19,1,24,8,12,4,8,24,24,2,20,15,2,14,9]
+    data['vehicle_capacities'] = [100, 100, 100, 100, 100]
+    data['num_vehicles'] = 5
     data['depot'] = 0
     return data
 
@@ -164,6 +166,9 @@ def main():
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = (
         routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+    
+    search_parameters.time_limit.seconds = 10
+    search_parameters.local_search_metaheuristic = ( routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH)
 
     # Solve the problem.
     solution = routing.SolveWithParameters(search_parameters)

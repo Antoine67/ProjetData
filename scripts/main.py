@@ -13,13 +13,16 @@ from load_data import  from_file_to_adj_matr
 import networkx as nx
 
 
-nb_camions = 2
+import numpy as np
+import json 
+
+nb_camions = 10
 nb_villes = 50
-timeout = 60 # in s
+timeout = 20 # in s
 
 
 """
-AUTOMATIC            	  	Lets the solver select the metaheuristic.
+AUTOMATIC            	Lets the solver select the metaheuristic.
 GREEDY_DESCENT      	  	Accepts improving (cost-reducing) local search neighbors until a local minimum is reached.
 GUIDED_LOCAL_SEARCH 	  	Uses guided local search to escape local minima (cf. http://en.wikipedia.org/wiki/Guided_Local_Search); this is generally the most efficient metaheuristic for vehicle routing.
 SIMULATED_ANNEALING 	  	Uses simulated annealing to escape local minima (cf. http://en.wikipedia.org/wiki/Simulated_annealing).
@@ -38,21 +41,23 @@ def main():
     #vrp.create_data_model()
     vrp.pass_matrix(from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp'))
     print(vrp.data)
+    print(len(vrp.data['distance_matrix']))
     
     # CVRP
     # TODO
     #cvrp = CVRP(nb_camions,nb_villes)
     #cvrp.create_data_model()
     
+    
     # Display graph
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     #nx.draw(G, with_labels=True)
-        
+    
     for strategy in algos:
         solution = vrp.solve(strategy, timeout)
         #solution = cvrp.solve(strategy, timeout)
         print(solution)
-        
+    
 
 if __name__ == '__main__':
     main()

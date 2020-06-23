@@ -38,7 +38,7 @@ def print_solution(data, manager, routing, solution):
 
 
 def solution_to_array(data, manager, routing, solution):
-    solut = [None] * len(data)
+    solut = [None] * data['num_vehicles']
     for vehicle_id in range(data['num_vehicles']):
         index = routing.Start(vehicle_id)
         route_distance = 0
@@ -107,7 +107,7 @@ class VRP:
         routing.AddDimension(
             transit_callback_index,
             0,  # no slack
-            30,  # vehicle maximum travel distance
+            1000,  # vehicle maximum travel distance
             True,  # start cumul to zero
             dimension_name)
         distance_dimension = routing.GetDimensionOrDie(dimension_name)
@@ -120,6 +120,7 @@ class VRP:
         search_parameters.time_limit.seconds = timeout
         #search_parameters.lns_time_limit.seconds = timeout
         search_parameters.log_search = True  
+        search_parameters.solution_limit = 100
 
     
         # Solve the problem.

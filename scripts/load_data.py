@@ -19,7 +19,7 @@ def get_data(cities_coords):
     adjacency_mat = np.zeros((length,length))
     cities_coords =  cities_coords.astype(np.int)
     for i, city in enumerate(cities_coords):
-        print(city)
+        #print(city)
         a = np.array(city[1],city[2])
         for j in range(length):
             b =  np.array(cities_coords[j][1], cities_coords[j][2])
