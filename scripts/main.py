@@ -20,7 +20,6 @@ nb_camions = 5
 nb_villes = 32
 timeout = 15 # in s
 
-
 """
 AUTOMATIC            	Lets the solver select the metaheuristic.
 GREEDY_DESCENT      	  	Accepts improving (cost-reducing) local search neighbors until a local minimum is reached.

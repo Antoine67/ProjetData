@@ -49,9 +49,9 @@ def solution_to_array(data, manager, routing, solution):
             solut[vehicle_id].append(manager.IndexToNode(index))
             previous_index = index
             index = solution.Value(routing.NextVar(index))
-           
-            route_distance = route_distance + routing.GetArcCostForVehicle(
-                previous_index, index, vehicle_id)
+
+            route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
+
         solut[vehicle_id].append(manager.IndexToNode(index))
     return solut,route_distance
 
