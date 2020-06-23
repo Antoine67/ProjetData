@@ -4,6 +4,7 @@ from __future__ import print_function
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 from random import randrange
+import numpy as np
 
 """Random adjacency matrix of given size"""
 def random_adjacency_matrix(length, minWeight = 1, maxWeight = 10):
@@ -170,7 +171,7 @@ class CVRP:
 
         # Print solution on console.
         if solution:
-            print_solution(self.data, manager, routing, solution)
+            #print_solution(self.data, manager, routing, solution)
             return solution_to_array(self.data, manager, routing, solution)
         return None
     

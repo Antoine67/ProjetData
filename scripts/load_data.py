@@ -22,7 +22,15 @@ def load_from(path):
             cities_coords.append(line)
         return np.array(cities_coords), capacity, cities_nb, vehicules_nb
             
-            
+
+def get_particular_info(path, string):
+    with open(path, 'r') as f:
+        lines = list(map(lambda l: l.replace('\n', '').split(), f.readlines()))
+        for line in lines:
+            if string == line[0]:
+                return int(line[-1])
+        return None
+    
 def get_data(cities_coords):
     length = len(cities_coords)
     adjacency_mat = np.zeros((length,length))
