@@ -53,27 +53,22 @@ def main():
             vrp.pass_matrix(mat)
         print(vrp.data)
         
-        for strategy in algos:
-            solution = vrp.solve(strategy, timeout)
-            if not random:
-                print("solution attendu : " + str(cost))
-            print("solution obtenu : " + str(solution[1]))
-            print(solution)
+        
     elif cvrpOrVrp == 'cvrp':
         # CVRP
-        cvrp = CVRP(vehicules_nb,cities_nb)
+        vrp = CVRP(vehicules_nb,cities_nb)
         if random:
-            cvrp.create_data_model()
+            vrp.create_data_model()
         else:
-            cvrp.pass_matrix(mat, demand_matrix,capacity)
-        print(cvrp.data)
+            vrp.pass_matrix(mat, demand_matrix,capacity)
+        print(vrp.data)
         
-        for strategy in algos:
-            solution = cvrp.solve(strategy, timeout)
+    for strategy in algos:
+            solution = vrp.solve(strategy, timeout)
             if not random:
-                print("solution attendu : " + str(cost))
-            print("solution obtenu : " + str(solution[1]))
-            print(solution)
+                print("solution attendue : " + str(cost))
+            print("solution obtenue : " + str(solution[1]))
+            print(solution)    
 
     
     # Display graph
