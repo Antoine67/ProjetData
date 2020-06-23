@@ -41,8 +41,8 @@ def get_data(cities_coords):
 
             
 def  from_file_to_adj_matr(path):
-    cities_coords, capacity, citites_nb,vehicules_nb = load_from(path)
-    return get_data(cities_coords), capacity, citites_nb,vehicules_nb 
+    cities_coords, capacity, cities_nb,vehicules_nb = load_from(path)
+    return get_data(cities_coords), capacity, cities_nb,vehicules_nb 
                
 '''
 if __name__ == '__main__':

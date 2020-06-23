@@ -35,10 +35,14 @@ algos = [
 ]
 
 def main():
+    
+    
+    mat, capacity, cities_nb, vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    
     # VRP
-    vrp = VRP(nb_camions,nb_villes)
+    vrp = VRP(vehicules_nb,cities_nb)
     #vrp.create_data_model()
-    mat, capacity, citites_nb,vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    
     vrp.pass_matrix(mat)
     print(vrp.data)
     
