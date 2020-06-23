@@ -37,7 +37,7 @@ algos = [
 def main():
     
     
-    mat, capacity, cities_nb, vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp')
+    mat, capacity, cities_nb, vehicules_nb = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     
     # VRP
     vrp = VRP(vehicules_nb,cities_nb)
