@@ -4,8 +4,14 @@ def load_from(path):
 
     with open(path, 'r') as f:
         lines = list(map(lambda l: l.replace('\n', '').split(), f.readlines()))
-        name = lines[0][2]
-        print ('File name : ' + name)
+        file_name = lines[0][2]
+        
+        
+        capacity = int(lines[5][2])
+        cities_nb = int(lines[3][2])
+        
+        vehicules_nb = int(file_name.split("k",1)[1]) 
+        
         cities_coords = []
         
         
@@ -14,7 +20,7 @@ def load_from(path):
             if(line[0] == 'EOF' or line[0] == 'DEMAND_SECTION'):
                 break;
             cities_coords.append(line)
-        return np.array(cities_coords)
+        return np.array(cities_coords), capacity, cities_nb, vehicules_nb
             
             
 def get_data(cities_coords):
@@ -35,10 +41,10 @@ def get_data(cities_coords):
 
             
 def  from_file_to_adj_matr(path):
-    cities_coords = load_from(path)
-    return get_data(cities_coords)
+    cities_coords, capacity, citites_nb,vehicules_nb = load_from(path)
+    return get_data(cities_coords), capacity, citites_nb,vehicules_nb 
                
-
+'''
 if __name__ == '__main__':
     print(from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp'))
-    
+'''

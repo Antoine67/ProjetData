@@ -8,7 +8,7 @@ Created on Mon Jun 22 15:00:48 2020
 from vrp import VRP
 from cvrp import CVRP
 from ortools.constraint_solver import routing_enums_pb2
-from load_data import  from_file_to_adj_matr
+from load_data import from_file_to_adj_matr
 
 import networkx as nx
 

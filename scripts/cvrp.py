@@ -2,7 +2,7 @@ from __future__ import print_function
 
 """Capacited Vehicles Routing Problem (CVRP)."""
 
-from load_data import  from_file_to_adj_matr
+from load_data import from_file_to_adj_matr
 
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
