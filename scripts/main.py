@@ -16,9 +16,9 @@ import networkx as nx
 import numpy as np
 import json 
 
-nb_camions = 10
-nb_villes = 50
-timeout = 20 # in s
+nb_camions = 5
+nb_villes = 32
+timeout = 15 # in s
 
 
 """
@@ -41,7 +41,6 @@ def main():
     #vrp.create_data_model()
     vrp.pass_matrix(from_file_to_adj_matr('../data/A-VRP/A-n32-k5.vrp'))
     print(vrp.data)
-    print(len(vrp.data['distance_matrix']))
     
     # CVRP
     # TODO
