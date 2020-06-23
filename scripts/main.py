@@ -18,7 +18,7 @@ import json
 
 nb_camions = 10
 nb_villes = 50
-timeout = 20 # in s
+timeout = 100 # in s
 
 
 """
