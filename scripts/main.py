@@ -46,7 +46,6 @@ def main():
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
     solutionsLimitArray = [100,200]
-    timeout = 100
     
 
     if cvrpOrVrp == 'vrp':
@@ -70,24 +69,30 @@ def main():
 
 
 
+    # Résoud le problème du VRP/CVRP
+    
     for strategy in algos:
-            solution = vrp.solve(strategy, timeout)
+            solution = vrp.solve(strategy, timeout, useTimeout=True, useHeuristic=True)
             if not random:
-                print("solution attendue : " + str(cost))
-            print("solution obtenue : " + str(solution[1]))
+                print("Solution attendue : " + str(cost))
+            print("Solution obtenue : " + str(solution[1]))
             print(solution)
-              
+           
 
-    execution_time_solutions(algos, vrp, solutionsLimitArray)
+    # Créér des stats sur le vrp
+    #execution_time_solutions(algos, vrp, solutionsLimitArray)
 
+    """
+    # Afficher des statistiques
     display_statistics([{'name':'temps execution en fonction des solutions',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
                         {'name':'temps execution en fonction des solutions',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
-    
-    # Display graph
+    """ 
+ 
+    # Afficher le graphique des villes
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
     #nx.draw(G, with_labels=True)
     

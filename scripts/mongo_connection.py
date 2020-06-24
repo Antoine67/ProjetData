@@ -105,7 +105,13 @@ def get_avg_stats(name, specification, dataset_name):
 
 
 def get_avg_stats2(name, specification, dataset_name):
-    data = stats.find({'name':name,'specification':specification,'dataset_name':dataset_name})
+    query = {"name":name,"specification":specification,"dataset_name":dataset_name}
+
+    item_count = stats.count_documents(query)
+    if(item_count <= 0):
+        raise Exception("Aucun document trouvé")
+        
+    data = stats.find(query)
     first_occ = data[0]
     # GROUP BY X
     points = {}

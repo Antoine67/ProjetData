@@ -22,7 +22,7 @@ def display_graph(specifications):
     
     plt.show()
 
-def execution_time_solutions(algos, vrp, solutionsLimitArray):
+def execution_time_solutions(algos, vrp, solutionsLimitArray, useHeuristic):
 
     stats_strategy = []
     stats_x = []
@@ -35,7 +35,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray):
                 # Get the time execution for statistics
                 start_time = time.time()
                 
-                solution = vrp.solve(strategy, solutionsLimit)
+                solution = vrp.solve(strategy, solutionsLimit, useTimeout = False, useHeuristic = useHeuristic)
 
                 execution_time = time.time() - start_time
                 print(strategy,execution_time)
@@ -54,6 +54,6 @@ def display_statistics(arrayIN):
     specifications = []
     
     for array in arrayIN:
-        specifications.append(get_avg_stats2(array['name'],array['specification'],array['dataset_name']))
+        specifications.append(get_avg_stats2(array["name"],array["specification"],array["dataset_name"]))
     
     display_graph(specifications)
