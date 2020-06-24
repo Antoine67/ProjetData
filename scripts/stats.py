@@ -9,11 +9,11 @@ import numpy as np
 import time
 from tqdm import tqdm
 
+SpecDico = {routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING:"Recuit Simulé",
+            routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH:"Tabou"}
 
 def display_graph(specifications):
 
-    SpecDico = {routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING:"Recuit Simulé",
-                routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH:"Tabou"}
 
     for spec in specifications:          
         plt.plot(spec['x'], spec['y'], 'o', label=SpecDico[spec['specification']])
@@ -36,7 +36,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray):
     for strategy in algos:
         temp_stats_x = []
         temp_stats_y = []
-        for solutionLimit in tqdm(solutionsLimitArray):
+        for solutionLimit in tqdm(solutionsLimitArray, desc = SpecDico[strategy]):
                 # Get the time execution for statistics
                 start_time = time.time()
                 
@@ -64,7 +64,8 @@ def execution_time_vehicules(algos, vrp, vehicules_nb):
         
         # Get the time execution for statistics
         start_time = time.time()
-                
+
+        vrp.k = vehicules_nb       
         solution = vrp.solve(strategy, solutionLimit)
 
         execution_time = time.time() - start_time
@@ -75,7 +76,7 @@ def execution_time_vehicules(algos, vrp, vehicules_nb):
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
         
-    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de villes', 'Temps (s)', stats_strategy, 'A-n33-k6')
+    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de véhicules', 'Nombre de véhicules', 'Temps (s)', stats_strategy, 'A-n33-k6')
 
 
 def execution_time_cities(algos, vrp, cities_nb):
@@ -90,7 +91,8 @@ def execution_time_cities(algos, vrp, cities_nb):
         
         # Get the time execution for statistics
         start_time = time.time()
-                
+
+        vrp.towns_nb = cities_nb        
         solution = vrp.solve(strategy, solutionLimit)
 
         execution_time = time.time() - start_time
@@ -101,7 +103,7 @@ def execution_time_cities(algos, vrp, cities_nb):
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
         
-    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de véhicules', 'Nombre de véhicules', 'Temps (s)', stats_strategy, 'A-n33-k6')    
+    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de ville', 'Temps (s)', stats_strategy, 'A-n33-k6')    
 
 
 def display_statistics(arrayIN):
