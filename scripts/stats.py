@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
 import time
+from tqdm import tqdm
 
 
 def display_graph(specifications):
@@ -35,7 +36,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray):
     for strategy in algos:
         temp_stats_x = []
         temp_stats_y = []
-        for solutionLimit in solutionsLimitArray:
+        for solutionLimit in tqdm(solutionsLimitArray):
                 # Get the time execution for statistics
                 start_time = time.time()
                 

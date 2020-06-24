@@ -41,11 +41,6 @@ algos_metaheuristic = [
    routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING,
 ]
 
-
-algos_heuristic = [
-   routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC,
-]
-
 def main():
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
@@ -66,7 +61,7 @@ def main():
             vrp.create_data_model()
         else:
             vrp.pass_matrix(mat)
-        print(vrp.data)
+        #print(vrp.data)
         
         
     elif cvrpOrVrp == 'cvrp':
@@ -76,7 +71,7 @@ def main():
             vrp.create_data_model()
         else:
             vrp.pass_matrix(mat, demand_matrix,capacity)
-        print(vrp.data)
+        #print(vrp.data)
 
     # Résoud le problème du VRP/CVRP
     """
