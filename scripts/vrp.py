@@ -80,7 +80,7 @@ class VRP:
         data['depot'] = self.depot 
         self.data = data
         
-    def solve(self, strategy, timeout):
+    def solve(self, strategy, timeout, useTimeout = False):
     
         # Create the routing index manager.
         manager = pywrapcp.RoutingIndexManager(len(self.data['distance_matrix']),
@@ -118,11 +118,13 @@ class VRP:
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
         #search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
         search_parameters.local_search_metaheuristic = (strategy)
-        search_parameters.time_limit.seconds = timeout
-        #search_parameters.lns_time_limit.seconds = timeout
-        search_parameters.log_search = True  
-        #search_parameters.solution_limit = 1000
-
+        if useTimeout:   
+            search_parameters.time_limit.seconds = timeout
+            #search_parameters.lns_time_limit.seconds = timeout
+        else:
+            search_parameters.solution_limit = timeout
+        
+        search_parameters.log_search = True
     
         # Solve the problem.
         solution = routing.SolveWithParameters(search_parameters)

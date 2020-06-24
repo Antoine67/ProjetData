@@ -26,14 +26,14 @@ def insert_stats(x,y, name, x_label="", y_label="", specification="", dataset_na
 
 
 
-def insert_multiple_stats(x_array, y_array, name, x_label, y_label, specification_array, dataset_name_array):
+def insert_multiple_stats(x_array, y_array, name, x_label, y_label, specification_array, dataset_name):
     
-    if(len(x_array) != len(y_array)):
+    if len(x_array) != len(y_array) or len(x_array) != len(specification_array):
         raise Exception('Len X != Len Y !')
     
     length = len(x_array);
     for i in range(length):
-        insert_stats(x_array[i], y_array[i], name, x_label, y_label, specification_array[i],dataset_name_array[i] )
+        insert_stats(x_array[i], y_array[i], name, x_label, y_label, specification_array[i],dataset_name )
 
 
 
