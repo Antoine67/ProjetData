@@ -106,14 +106,13 @@ def get_avg_stats(name, specification, dataset_name):
 
 def get_avg_stats2(name, specification, dataset_name):
     data = stats.find({'name':name,'specification':specification,'dataset_name':dataset_name})
-
+    first_occ = data[0]
     # GROUP BY X
     points = {}
     for d in data:
         for i in range(len(d['x'])):
             x = d['x'] 
             y = d['y']
-            print(x[i],y[i])
             if x[i] in points:
                 points[x[i]].append(y[i])
             else :
@@ -126,18 +125,20 @@ def get_avg_stats2(name, specification, dataset_name):
     for key, value in points.items():
         moy = 0
         final_points[key] = np.average(np.array(value))
-            
-    return final_points         
+    final_dic = {'x':list(final_points.keys()),
+                 'y':list(final_points.values()),
+                 'x_label':first_occ['x_label'],
+                 'y_label':first_occ['y_label'],
+                 'specification':specification,
+                 'dataset_name':dataset_name,
+                }        
+    return final_dic         
         
 """
 if __name__ == '__main__':
-   
-    
 
     #insert_multiple_stats([[1,2,3],[1,2,3]], [[1,2,3],[3,6,9]],"temps en fct nb solutions", "nb solutions","temps", ['tabu','simulated'],'n32-k5'])
     a = get_avg_stats2("temps en fct nb solutions", "tabu","n32-k5")
-    
-    for i in a:
-        print(i)
-    """
+    print(a)
 
+"""
