@@ -50,7 +50,13 @@ def main():
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
-    solutionsLimitArray = [100,200]
+    solutionsLimitArray = [50,100,150,200,250,300,350,400,450,
+                           500,550,600,650,700,750,800,850,900,
+                           950,1000,1050,1100,1150,1200,1250,
+                           1300,1350,1400,1450,1500,1550,1600,
+                           1650,1700,1750,1800,1850,1900,1950,
+                           2000,2050,2100,2150,2200,2250,2300,
+                           2350,2400,2450,2500]
     
 
     if cvrpOrVrp == 'vrp':
