@@ -118,7 +118,7 @@ class VRP:
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
         
         if(useHeuristic):
-            search_parameters.first_solution_strategy = strategy# (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+            search_parameters.first_solution_strategy = strategy
         else:
             search_parameters.local_search_metaheuristic = strategy
         

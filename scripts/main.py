@@ -36,9 +36,14 @@ TABU_SEARCH         	  	Uses tabu search to escape local minima (cf. http://en.w
 OBJECTIVE_TABU_SEARCH   	Uses tabu search on the objective value of solution to escape local minima
 """
 
-algos = [
+algos_metaheuristic = [
    routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH,
    routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING,
+]
+
+
+algos_heuristic = [
+   routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC,
 ]
 
 def main():
@@ -71,7 +76,7 @@ def main():
 
     # Résoud le problème du VRP/CVRP
     
-    for strategy in algos:
+    for strategy in algos_heuristic:
             solution = vrp.solve(strategy, timeout, useTimeout=True, useHeuristic=True)
             if not random:
                 print("Solution attendue : " + str(cost))
@@ -83,12 +88,12 @@ def main():
     # Créér des stats sur le vrp
     """
     execution_time_solutions(algos, vrp, solutionsLimitArray)
-    execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
     """
     
-    """
+    
     # Afficher des statistiques
+    """
     display_statistics([{'name':'Temps execution en fonction des solutions',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
