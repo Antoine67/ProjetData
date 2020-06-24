@@ -131,6 +131,7 @@ def get_avg_stats2(name, specification, dataset_name):
                  'y_label':first_occ['y_label'],
                  'specification':specification,
                  'dataset_name':dataset_name,
+                 'name':name
                 }        
     return final_dic         
         

@@ -93,7 +93,7 @@ def main():
     print(stats_x)
     print(stats_y)
     insert_multiple_stats(stats_x, stats_y, "temps execution en fonction des solutions", "Solution","Temps (s)", stats_strategy, 'A-n33-k6')
-
+ 
     test = get_avg_stats2("temps execution en fonction des solutions",3,"A-n33-k6")
     print(test)
     print_execution_time(test['x'],test['y'],test['name'],test['x_label'],test['y_label'],test['specification'])
