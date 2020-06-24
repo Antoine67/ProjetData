@@ -45,7 +45,7 @@ def main():
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
-    solutionsLimitArray = [100,200]
+    solutionsLimitArray = [100,200,300,400,500,600]
     
 
     if cvrpOrVrp == 'vrp':
