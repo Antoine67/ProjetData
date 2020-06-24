@@ -73,7 +73,6 @@ def main():
     for strategy in algos:
         temp_stats_x = []
         temp_stats_y = []
-        temp_stats_strategy = []
         for timeout in timeoutArray:
                 # Get the time execution for statistics
                 start_time = time.time()
@@ -88,14 +87,15 @@ def main():
                 print(strategy,execution_time)
                 temp_stats_x.append(timeout)
                 temp_stats_y.append(execution_time)
-                temp_stats_strategy.append(strategy)
+                stats_strategy.append(strategy)
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
-        stats_strategy.append(temp_stats_strategy)
-        
+    print(stats_x)
+    print(stats_y)
     insert_multiple_stats(stats_x, stats_y, "temps execution en fonction des solutions", "Solution","Temps (s)", stats_strategy, 'A-n33-k6')
 
-    test = get_stats("temps execution en fonction des solutions")[0]
+    test = get_avg_stats2("temps execution en fonction des solutions",3,"A-n33-k6")
+    print(test)
     print_execution_time(test['x'],test['y'],test['name'],test['x_label'],test['y_label'],test['specification'])
     
     

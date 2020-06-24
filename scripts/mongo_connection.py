@@ -28,7 +28,7 @@ def insert_stats(x,y, name, x_label="", y_label="", specification="", dataset_na
 
 def insert_multiple_stats(x_array, y_array, name, x_label, y_label, specification_array, dataset_name):
     
-    if len(x_array) != len(y_array) or len(x_array) != len(specification_array):
+    if len(x_array) != len(y_array):
         raise Exception('Len X != Len Y !')
     
     length = len(x_array);
@@ -38,29 +38,106 @@ def insert_multiple_stats(x_array, y_array, name, x_label, y_label, specificatio
 
 
 
-def get_stats(name):
+def get_first_stat(name):
     return stats.find({ "name": name});
 
 
-def show_stats(name):
-    stat = get_stats(name)[0]
-    x = stat['x']
-    y = stat['y']
+def get_avg_stats(name, specification, dataset_name):
+    #return stats.find({ "name": name});
+    return stats.aggregate([{
+        '$match': {
+            'name': name, 
+            'specification': specification,
+            'dataset_name':dataset_name,
+        }
+    }, 
+        
+        {
+        "$unwind": {
+            "path": "$y",
+            "includeArrayIndex": "rowY"
+        }
+    },
+        {
+        "$unwind": {
+            "path": "$x",
+            "includeArrayIndex": "rowX"
+        }
+    },
+    {
+        "$group": {
+            "_id": {
+                "name": "$name",
+                "rowY": "$rowY",
+               
+            },
+            "mean_y": {
+                "$avg": "$y"
+            }
+        }
+    },
     
-    fig = plt.figure()
-    fig.suptitle(stat['name'], fontsize=14, fontweight='bold')
-    
-    ax = fig.add_subplot(111)
-    ax.set_xlabel(stat['x_label'])
-    ax.set_ylabel(stat['y_label'])
-    plt.plot(x, y)
-    plt.show()
+    {
+        "$group": {
+            "_id": "$_id.name",
+            "mean_y": {
+                "$push": "$mean_y"
+            }
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "name": "$_id",
+            "mean_y": 1
+        }
+    }
+])
 
+'''
+    {
+        "$sort": {
+            "_id.name": 1,
+            "_id.rowY": 1
+        }
+    },
+    '''
+
+
+def get_avg_stats2(name, specification, dataset_name):
+    data = stats.find({'name':name,'specification':specification,'dataset_name':dataset_name})
+
+    # GROUP BY X
+    points = {}
+    for d in data:
+        for i in range(len(d['x'])):
+            x = d['x'] 
+            y = d['y']
+            print(x[i],y[i])
+            if x[i] in points:
+                points[x[i]].append(y[i])
+            else :
+                 points[x[i]] = [y[i]]
+   
+    
+    
+    #Moyenne
+    final_points = {}
+    for key, value in points.items():
+        moy = 0
+        final_points[key] = np.average(np.array(value))
+            
+    return final_points         
+        
 """
 if __name__ == '__main__':
-    insert_stats([1,2,3,4,5],[4,8,7,54,4], 'test','s','exec')
+   
     
-    insert_multiple_stats([[1,2,3],[1,2,3]], [[10,15,25],[3,6,9]],"temps en fct nb solutions", "nb solutions","temps", ['tabu','simulated'],['n32-k5','n32-k5'])
-    print(get_stats('test')[0])
-    show_stats("test")
-"""
+
+    #insert_multiple_stats([[1,2,3],[1,2,3]], [[1,2,3],[3,6,9]],"temps en fct nb solutions", "nb solutions","temps", ['tabu','simulated'],'n32-k5'])
+    a = get_avg_stats2("temps en fct nb solutions", "tabu","n32-k5")
+    
+    for i in a:
+        print(i)
+    """
+
