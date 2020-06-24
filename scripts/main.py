@@ -79,11 +79,19 @@ def main():
               
 
     execution_time_solutions(algos, vrp, solutionsLimitArray)
+    execution_time_vehicules(algos, vrp, vehicules_nb)
 
-    display_statistics([{'name':'temps execution en fonction des solutions',
+    display_statistics([{'name':'Temps execution en fonction des solutions',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
-                        {'name':'temps execution en fonction des solutions',
+                        {'name':'Temps execution en fonction des solutions',
+                         'specification':4,
+                         'dataset_name':'A-n33-k6'}])
+
+    display_statistics([{'name':'Temps execution en fonction du nombre de ville',
+                         'specification':3,
+                         'dataset_name':'A-n33-k6'},
+                        {'name':'Temps execution en fonction du nombre de ville',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
     
