@@ -39,7 +39,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray, useHeuristic):
                 # Get the time execution for statistics
                 start_time = time.time()
                 
-                solution = vrp.solve(strategy, solutionsLimit, useTimeout = False, useHeuristic = useHeuristic)
+                solution = vrp.solve(strategy, solutionLimit, False, useHeuristic)
 
 
                 execution_time = time.time() - start_time

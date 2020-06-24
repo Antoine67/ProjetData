@@ -72,20 +72,19 @@ def main():
             vrp.pass_matrix(mat, demand_matrix,capacity)
         print(vrp.data)
 
-
-
     # Résoud le problème du VRP/CVRP
-    
+    """
     for strategy in algos_heuristic:
             solution = vrp.solve(strategy, timeout, useTimeout=True, useHeuristic=True)
             if not random:
                 print("Solution attendue : " + str(cost))
             print("Solution obtenue : " + str(solution[1]))
             print(solution)
-           
+     """   
 
 
     # Créér des stats sur le vrp
+    execution_time_solutions(algos_heuristic, vrp, solutionsLimitArray, False)
     """
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
