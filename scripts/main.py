@@ -45,7 +45,9 @@ def main():
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
-    timeoutArray = [100,200]
+    solutionsLimitArray = [100,200]
+    timeout = 100
+    
 
     if cvrpOrVrp == 'vrp':
         # VRP
@@ -66,38 +68,24 @@ def main():
             vrp.pass_matrix(mat, demand_matrix,capacity)
         print(vrp.data)
 
-    stats_strategy = []
-    stats_x = []
-    stats_y = []
+
 
     for strategy in algos:
-        temp_stats_x = []
-        temp_stats_y = []
-        for timeout in timeoutArray:
-                # Get the time execution for statistics
-                start_time = time.time()
-                
-                solution = vrp.solve(strategy, timeout)
-                if not random:
-                    print("solution attendue : " + str(cost))
-                print("solution obtenue : " + str(solution[1]))
-                print(solution)
+            solution = vrp.solve(strategy, timeout)
+            if not random:
+                print("solution attendue : " + str(cost))
+            print("solution obtenue : " + str(solution[1]))
+            print(solution)
+              
 
-                execution_time = time.time() - start_time
-                print(strategy,execution_time)
-                temp_stats_x.append(timeout)
-                temp_stats_y.append(execution_time)
-                stats_strategy.append(strategy)
-        stats_x.append(temp_stats_x)
-        stats_y.append(temp_stats_y)
-    print(stats_x)
-    print(stats_y)
-    insert_multiple_stats(stats_x, stats_y, "temps execution en fonction des solutions", "Solution","Temps (s)", stats_strategy, 'A-n33-k6')
- 
-    test = get_avg_stats2("temps execution en fonction des solutions",3,"A-n33-k6")
-    print(test)
-    print_execution_time(test['x'],test['y'],test['name'],test['x_label'],test['y_label'],test['specification'])
-    
+    execution_time_solutions(algos, vrp, solutionsLimitArray)
+
+    display_statistics([{'name':'temps execution en fonction des solutions',
+                         'specification':3,
+                         'dataset_name':'A-n33-k6'},
+                        {'name':'temps execution en fonction des solutions',
+                         'specification':4,
+                         'dataset_name':'A-n33-k6'}])
     
     # Display graph
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
