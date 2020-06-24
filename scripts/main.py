@@ -84,7 +84,7 @@ def main():
 
 
     # Créér des stats sur le vrp
-    execution_time_solutions(algos_heuristic, vrp, solutionsLimitArray, False)
+    execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     """
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)

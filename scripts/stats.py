@@ -26,7 +26,7 @@ def display_graph(specifications):
     
     plt.show()
 
-def execution_time_solutions(algos, vrp, solutionsLimitArray, useHeuristic):
+def execution_time_solutions(algos, vrp, solutionsLimitArray):
 
     stats_strategy = []
     stats_x = []
@@ -39,7 +39,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray, useHeuristic):
                 # Get the time execution for statistics
                 start_time = time.time()
                 
-                solution = vrp.solve(strategy, solutionLimit, False, useHeuristic)
+                solution = vrp.solve(strategy, solutionLimit, False)
 
 
                 execution_time = time.time() - start_time
