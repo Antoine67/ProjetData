@@ -20,12 +20,12 @@ import numpy as np
 import json 
 import matplotlib.pyplot as plt
 
-nb_camions = 5
-nb_villes = 17
+from tqdm import tqdm
+
 timeout = 15 # in s
 
 cvrpOrVrp = 'cvrp'
-random = False
+random = True
 
 """
 AUTOMATIC            	Lets the solver select the metaheuristic.
@@ -44,6 +44,9 @@ algos_metaheuristic = [
 def main():
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
+    
+    
+    
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
     solutionsLimitArray = [100,200,300,400,500,600]
     
@@ -79,13 +82,14 @@ def main():
 
 
     # Créér des stats sur le vrp
-    execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     """
+    execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
     """
-    
-    
+    for i in tqdm(range(100)):
+        vrp.vehicules_nb = i
+        execution_time_vehicules(algos_metaheuristic, vrp, vehicules_nb)
     # Afficher des statistiques
     """
     display_statistics([{'name':'Temps execution en fonction des solutions',
