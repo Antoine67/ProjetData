@@ -54,7 +54,15 @@ def main():
     
     
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
-    solutionsLimitArray = [100,200,300,400,500,600]
+
+    solutionsLimitArray = [50,100,150,200,250,300,350,400,450,
+                           500,550,600,650,700,750,800,850,900,
+                           950,1000,1050,1100,1150,1200,1250,
+                           1300,1350,1400,1450,1500,1550,1600,
+                           1650,1700,1750,1800,1850,1900,1950,
+                           2000,2050,2100,2150,2200,2250,2300,
+                           2350,2400,2450,2500]
+
     
 
     if cvrpOrVrp == 'vrp':
@@ -92,7 +100,7 @@ def main():
     execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
-    
+    """
     for i in tqdm(range(100)):
         vrp.vehicules_nb = i
         execution_time_vehicules(algos_metaheuristic, vrp, vehicules_nb)
@@ -105,14 +113,14 @@ def main():
                         {'name':'Temps execution en fonction des solutions',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
-
+    
     display_statistics([{'name':'Temps execution en fonction du nombre de ville',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
                         {'name':'Temps execution en fonction du nombre de ville',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
-    
+    """
  
     # Afficher le graphique des villes
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
