@@ -100,7 +100,7 @@ def main():
     execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
-    
+    """
     for i in tqdm(range(100)):
         vrp.vehicules_nb = i
         execution_time_vehicules(algos_metaheuristic, vrp, vehicules_nb)
@@ -113,14 +113,14 @@ def main():
                         {'name':'Temps execution en fonction des solutions',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
-    """
+    
     display_statistics([{'name':'Temps execution en fonction du nombre de ville',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
                         {'name':'Temps execution en fonction du nombre de ville',
                          'specification':4,
                          'dataset_name':'A-n33-k6'}])
-    
+    """
  
     # Afficher le graphique des villes
     #G = nx.from_numpy_matrix(vrp.data['distance_matrix']) 
