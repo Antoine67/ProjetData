@@ -76,7 +76,9 @@ def execution_time_vehicules(algos, vrp, vehicules_nb):
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
         
+
     insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de véhicules', 'Nombre de véhicules', 'Temps (s)', stats_strategy, 'A-n33-k6')
+
 
 
 def execution_time_cities(algos, vrp, cities_nb):
@@ -103,7 +105,9 @@ def execution_time_cities(algos, vrp, cities_nb):
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
         
+
     insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de ville', 'Temps (s)', stats_strategy, 'A-n33-k6')    
+
 
 
 def display_statistics(arrayIN):
