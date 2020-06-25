@@ -108,7 +108,31 @@ def execution_time_cities(algos, vrp, cities_nb, dataset_name):
 
     insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de ville', 'Temps (s)', stats_strategy, dataset_name)    
 
+def execution_quality_cities(algos, vrp, cities_nb, dataset_name, cost):
+    solutionLimit = 100
+    stats_strategy = []
+    stats_x = []
+    stats_y = []
+    
+    for strategy in algos:
+        temp_stats_x = []
+        temp_stats_y = []
+        
+        # Get the time execution for statistics
 
+        vrp.towns_nb = cities_nb        
+        solution = vrp.solve(strategy, solutionLimit)
+
+
+        temp_stats_x.append(cities_nb)
+        temp_stats_y.append(solution[1] - cost)
+        stats_strategy.append(strategy)
+        
+        stats_x.append(temp_stats_x)
+        stats_y.append(temp_stats_y)
+        
+
+    insert_multiple_stats(stats_x, stats_y, 'Qualité de la solution en fonction du nombre de ville', 'Nombre de ville', 'Ecart', stats_strategy, dataset_name)
 
 def display_statistics(arrayIN):
 
