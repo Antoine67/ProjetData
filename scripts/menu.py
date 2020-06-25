@@ -226,8 +226,8 @@ def call_stats(arg1):
 
         cost = get_particular_info(path_cost, 'cost')
         
-        for i in tqdm(range(cities_nb)):
-            execution_quality_cities(algos_metaheuristic, vrp, i, dataset_name, cost)
+        
+        execution_quality_cities(algos_metaheuristic, vrp, cities_nb, dataset_name, cost)
     
     print('Appuyez sur entrée pour continuer...')
     input()

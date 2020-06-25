@@ -7,6 +7,7 @@ Created on Mon Jun 22 15:00:48 2020
 
 from vrp import VRP
 from cvrp import CVRP
+from vrptw import VRPTW
 from ortools.constraint_solver import routing_enums_pb2
 from load_data import from_file_to_adj_matr
 from load_data import get_particular_info
@@ -26,7 +27,7 @@ from menu import displayMenu
 
 timeout = 15 # in s
 
-cvrpOrVrp = 'cvrp'
+cvrpOrVrp = 'vrptw'
 random = True
 
 """
@@ -84,15 +85,24 @@ def main():
             vrp.pass_matrix(mat, demand_matrix,capacity)
         #print(vrp.data)
 
+    elif cvrpOrVrp == 'vrptw':
+        # CVRP
+        vrp = VRPTW(vehicules_nb,cities_nb)
+        if random:
+            vrp.create_data_model()
+        else:
+            vrp.pass_matrix(mat, demand_matrix,capacity)
+        #print(vrp.data)
+
     # Résoud le problème du VRP/CVRP
-    """
-    for strategy in algos_heuristic:
-            solution = vrp.solve(strategy, timeout, useTimeout=True, useHeuristic=True)
+    
+    for strategy in algos_metaheuristic:
+            solution = vrp.solve(strategy, timeout)
             if not random:
                 print("Solution attendue : " + str(cost))
             print("Solution obtenue : " + str(solution[1]))
             print(solution)
-     """   
+        
 
 
     # Créér des stats sur le vrp
@@ -100,11 +110,11 @@ def main():
     execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
-    """
+    
     for i in tqdm(range(100)):
         vrp.vehicules_nb = i
         execution_time_vehicules(algos_metaheuristic, vrp, vehicules_nb)
-    """
+    
     # Afficher des statistiques
     
     display_statistics([{'name':'Temps execution en fonction des solutions',
