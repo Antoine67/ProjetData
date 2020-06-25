@@ -10,8 +10,7 @@ from consolemenu.items import *
 
 import os, sys
 from ortools.constraint_solver import routing_enums_pb2
-from load_data import from_file_to_adj_matr
-from load_data import get_particular_info
+from load_data import *
 from mongo_connection import *
 from stats import *
 
@@ -55,6 +54,7 @@ def displayMenu():
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb vehicules", call_stats, ["TIMEVEHICULES"]))
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb villes", call_stats, ["TIMECITIES"]))
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Qualité Nb villes", call_stats, ["TIMECITIESQ"]))
+    statistics_executions_menu.append_item(FunctionItem("Execution(s) / Qualité Nb villes (DEV MODE)", call_stats_dev, ["TIMECITIESQ"]))
 
 
     statistics_display_menu = ConsoleMenu("Sélectionnez une action :", "Projet Data - DIDIER PIQUE HAAS EKOBE MOHR")
@@ -232,7 +232,52 @@ def call_stats(arg1):
     print('Appuyez sur entrée pour continuer...')
     input()
 
+def call_stats_dev(arg1):
+    print('VRP ou CVRP : ', end='')
+    vrp_type = input()
+        
+    if vrp_type.upper() != 'VRP' and vrp_type.upper() != 'CVRP':
+       raise Exception("Type de VRP non reconnu")
+       
+    dataset_name = None
 
+    
+    print('Chemin vers le fichier contenant les path : ', end='')
+    path = input()
+        
+    if(os.path.isfile(path) == False):
+        raise Exception("Chemin invalide")
+            
+    allPath = get_all_path(path)
+    for line in allPath:
+        
+        dataset_name = os.path.basename(line[0])    
+        mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr(line[0])
+        
+
+        if vrp_type.upper() == 'VRP':
+            # VRP
+            vrp = VRP(vehicules_nb,cities_nb)
+            
+            vrp.pass_matrix(mat)
+            
+            
+        elif vrp_type.upper() == 'CVRP':
+            # CVRP
+            vrp = CVRP(vehicules_nb,cities_nb)
+            
+            vrp.pass_matrix(mat, demand_matrix,capacity)
+
+
+        path_cost = line[1]
+            
+        if(os.path.isfile(path_cost) == False):
+            raise Exception("Chemin invalide")
+
+        cost = get_particular_info(path_cost, 'cost')
+           
+        print(line[0], line[1])    
+        execution_quality_cities(algos_metaheuristic, vrp, cities_nb, dataset_name, cost)
     
 def call_display_stats():
 
