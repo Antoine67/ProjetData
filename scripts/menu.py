@@ -54,6 +54,8 @@ def displayMenu():
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Solutions max", call_stats, ["TIMESOLUTIONS"]))
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb vehicules", call_stats, ["TIMEVEHICULES"]))
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb villes", call_stats, ["TIMECITIES"]))
+    statistics_executions_menu.append_item(FunctionItem("Execution(s) / Qualité Nb villes", call_stats, ["TIMECITIESQ"]))
+
 
     statistics_display_menu = ConsoleMenu("Sélectionnez une action :", "Projet Data - DIDIER PIQUE HAAS EKOBE MOHR")
     statistics_display_menu.append_item(FunctionItem("Afficher des graphique", call_display_stats, []))
@@ -152,8 +154,11 @@ def call_stats(arg1):
     if vrp_type.upper() != 'VRP' and vrp_type.upper() != 'CVRP':
        raise Exception("Type de VRP non reconnu")
        
-    dataset_name = None    
-    random = query_yes_no("Générer une matrice aléatoirement ?")
+    dataset_name = None
+    if arg1.upper()== "TIMECITIESQ":
+        random = False
+    else:
+        random = query_yes_no("Générer une matrice aléatoirement ?")
     if not random:
         print('Chemin vers le fichier : ', end='')
         path = input()
@@ -211,10 +216,24 @@ def call_stats(arg1):
     elif arg1.upper()== "TIMECITIES":
         for i in tqdm(range(cities_nb)):
             execution_time_cities(algos_metaheuristic, vrp, i, dataset_name)
+    elif arg1.upper()== "TIMECITIESQ":
+
+        print('Chemin vers le fichier de la solution: ', end='')
+        path_cost = input()
+        
+        if(os.path.isfile(path_cost) == False):
+            raise Exception("Chemin invalide")
+
+        cost = get_particular_info(path_cost, 'cost')
+        
+        for i in tqdm(range(cities_nb)):
+            execution_quality_cities(algos_metaheuristic, vrp, i, dataset_name, cost)
     
     print('Appuyez sur entrée pour continuer...')
     input()
-        
+
+
+    
 def call_display_stats():
 
     addNewGraph = True
