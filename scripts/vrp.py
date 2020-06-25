@@ -122,6 +122,8 @@ class VRP:
 
         search_parameters.local_search_metaheuristic = strategy
         
+        search_parameters.solution_limit = 30
+        
         if useTimeout:   
             search_parameters.time_limit.seconds = timeout
             #search_parameters.lns_time_limit.seconds = timeout
