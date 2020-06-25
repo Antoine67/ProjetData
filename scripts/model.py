@@ -21,19 +21,19 @@ collection_stats_vehicules_model = db['collection_stats_vehicules_model']
 
 def get_prediction(num_arete, hour, minute = 0):
     m, s = False, False
-    if(hour <= 9  or hour >7):
+    if(hour <= 9  and hour >= 7):
         m = True
         hour = hour - 7
-    elif(hour <= 19 or hour >17):
+    elif(hour <= 19 and hour >= 17):
         s  = True
-        hour = hour -17
+        hour = hour - 17
     creneau = 0 if m else 1
     res = load_pickle("../data/Regression/vehicules_aretes_"+ str(creneau) + "_n" + str(num_arete)+".pickle")
    
-
     #print(res.summary())
+    #print(res.params)
     pred = res.predict(exog=[hour, minute])
-
+   
     y_pred = res.params[0]+res.params[1]*(hour*60 + minute)
 
     return y_pred
@@ -103,12 +103,14 @@ def create_and_store_stats_model():
             
             pred[str(i)][j] = y_pred.tolist()
             
+            
+            
             regressor_OLS.save("../data/Regression/vehicules_aretes_"+ str(i) + "_n" + str(j)+".pickle")
             #Résidus
             """
             fig, ax = plt.subplots()
             ax.scatter(X[:,1], regressor_OLS.resid, alpha=0.3)
-            ax.set(title="Résidus de la régression linéairepour l'arête n°"+str(i), xlabel="Temps", ylabel="Residus")
+            ax.set(title="Résidus de la régression linéairepour l'arête n°"+str(j), xlabel="Temps", ylabel="Residus")
             plt.show()
             """
             
@@ -116,7 +118,7 @@ def create_and_store_stats_model():
             """
             fig, ax = plt.subplots()
             ax.scatter(X[:,1], ys, alpha=0.3)
-            ax.set(title="Régression linéaire pour l'arête n°"+str(i), xlabel="Temps", ylabel="Trafic")
+            ax.set(title="Régression linéaire pour l'arête n°"+str(j), xlabel="Temps", ylabel="Trafic")
             ax.plot(X[:,1], y_pred, linewidth=3)
             plt.show()
             """
@@ -125,5 +127,10 @@ def create_and_store_stats_model():
     #collection_stats_vehicules_model.insert_one(pred)
     
     #print(pred)
-#create_and_store_stats_model()
-print(get_prediction(0,7,20))
+            
+            
+"""
+Exemple :
+print(get_prediction(0,7,10))
+print(get_prediction(0,18,50))
+"""
