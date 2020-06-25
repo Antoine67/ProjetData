@@ -53,7 +53,7 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray, dataset_name):
     insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction des solutions', 'Solution', 'Temps (s)', stats_strategy, dataset_name)
 
 def execution_time_vehicules(algos, vrp, vehicules_nb, dataset_name):
-    solutionLimit = 500
+    solutionLimit = 100
     stats_strategy = []
     stats_x = []
     stats_y = []
@@ -82,7 +82,7 @@ def execution_time_vehicules(algos, vrp, vehicules_nb, dataset_name):
 
 
 def execution_time_cities(algos, vrp, cities_nb, dataset_name):
-    solutionLimit = 1000
+    solutionLimit = 100
     stats_strategy = []
     stats_x = []
     stats_y = []
