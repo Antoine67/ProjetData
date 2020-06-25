@@ -105,7 +105,7 @@ def get_avg_stats(name, specification, dataset_name):
 
 
 def get_avg_stats2(name, specification, dataset_name):
-    query = {"name":name,"specification":specification,"dataset_name":dataset_name}
+    query = {"name":name,"specification":specification,"dataset_name": { "$regex": "^(" + dataset_name + ".*)"} }
 
     item_count = stats.count_documents(query)
     if(item_count <= 0):
@@ -136,7 +136,7 @@ def get_avg_stats2(name, specification, dataset_name):
                  'x_label':first_occ['x_label'],
                  'y_label':first_occ['y_label'],
                  'specification':specification,
-                 'dataset_name':dataset_name,
+                 'dataset_name':first_occ['dataset_name'],
                  'name':name
                 }        
     return final_dic         

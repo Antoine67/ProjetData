@@ -56,13 +56,14 @@ def displayMenu():
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb villes", call_stats, ["TIMECITIES"]))
 
     statistics_display_menu = ConsoleMenu("Sélectionnez une action :", "Projet Data - DIDIER PIQUE HAAS EKOBE MOHR")
-
+    statistics_display_menu.append_item(FunctionItem("Afficher des graphique", call_display_stats, ["TIMESOLUTIONS"]))
    
 
     
 
     execution_item = SubmenuItem("Execution", statistics_executions_menu, menu)
     display_item = SubmenuItem("Affichage", statistics_display_menu, menu)
+    
     statistics_menu.append_item(execution_item)
     statistics_menu.append_item(display_item)
 
@@ -214,7 +215,35 @@ def call_stats(arg1):
     print('Appuyez sur entrée pour continuer...')
     input()
         
+def call_display_stats(arg1):
 
+    addNewGraph = True
+    arrayToDisplay = []
+    name = ""
+    
+    print('Nom des statistiques à afficher : ', end='')
+    name = input()
+
+
+    while addNewGraph:
+        print('Spécification : ', end='')
+        specification = int(input())
+
+        
+        print('Nom du dataset : ', end='')
+        dataset_name = input()
+
+        arrayToDisplay.append({'name':name,
+                         'specification':specification,
+                         'dataset_name':dataset_name})
+        
+        
+        addNewGraph =   query_yes_no("Ajouter un autre graph ?")
+        
+    display_statistics(arrayToDisplay)
+
+
+    
     
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.

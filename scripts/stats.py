@@ -16,7 +16,7 @@ def display_graph(specifications):
 
 
     for spec in specifications:          
-        plt.plot(spec['x'], spec['y'], 'o', label=SpecDico[spec['specification']])
+        plt.plot(spec['x'], spec['y'], 'o', label=SpecDico[spec['specification']] + " / " + spec['dataset_name'])
     
     
     plt.ylabel(specifications[0]['y_label'])
