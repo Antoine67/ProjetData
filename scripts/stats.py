@@ -27,7 +27,7 @@ def display_graph(specifications):
     
     plt.show()
 
-def execution_time_solutions(algos, vrp, solutionsLimitArray):
+def execution_time_solutions(algos, vrp, solutionsLimitArray, dataset_name):
 
     stats_strategy = []
     stats_x = []
@@ -50,9 +50,9 @@ def execution_time_solutions(algos, vrp, solutionsLimitArray):
         stats_x.append(temp_stats_x)
         stats_y.append(temp_stats_y)
         
-    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction des solutions', 'Solution', 'Temps (s)', stats_strategy, 'A-n33-k6')
+    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction des solutions', 'Solution', 'Temps (s)', stats_strategy, dataset_name)
 
-def execution_time_vehicules(algos, vrp, vehicules_nb):
+def execution_time_vehicules(algos, vrp, vehicules_nb, dataset_name):
     solutionLimit = 100
     stats_strategy = []
     stats_x = []
@@ -77,7 +77,7 @@ def execution_time_vehicules(algos, vrp, vehicules_nb):
         stats_y.append(temp_stats_y)
         
 
-    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de véhicules', 'Nombre de véhicules', 'Temps (s)', stats_strategy, 'A-n33-k6')
+    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de véhicules', 'Nombre de véhicules', 'Temps (s)', stats_strategy, dataset_name)
 
 
 

@@ -151,7 +151,7 @@ def call_stats(arg1):
     if vrp_type.upper() != 'VRP' and vrp_type.upper() != 'CVRP':
        raise Exception("Type de VRP non reconnu")
        
-        
+    dataset_name = None    
     random = query_yes_no("Générer une matrice aléatoirement ?")
     if not random:
         print('Chemin vers le fichier : ', end='')
@@ -161,13 +161,15 @@ def call_stats(arg1):
             raise Exception("Chemin invalide")
             
         
-            
+        dataset_name = os.path.basename(path)    
         mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr(path)
     else:
         print('Entrez le nombre de villes : ', end='')
         cities_nb = int(input())
         print('Entrez le nombre de véhicules : ', end='')
         vehicules_nb = int(input())
+        
+        dataset_name = "random-k" + str(vehicules_nb) + "-n" + str(cities_nb)
 
     if vrp_type.upper() == 'VRP':
         # VRP
@@ -201,13 +203,13 @@ def call_stats(arg1):
                 break
             
         
-        execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
+        execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray, dataset_name)
     elif arg1.upper()== "TIMEVEHICULES":
         for i in tqdm(range(vehicules_nb)):
-            execution_time_vehicules(algos_metaheuristic, vrp, i)
+            execution_time_vehicules(algos_metaheuristic, vrp, i, dataset_name)
     elif arg1.upper()== "TIMECITIES":
         for i in tqdm(range(cities_nb)):
-            execution_time_cities(algos_metaheuristic, vrp, i)
+            execution_time_cities(algos_metaheuristic, vrp, i, dataset_name)
     
     print('Appuyez sur entrée pour continuer...')
     input()
