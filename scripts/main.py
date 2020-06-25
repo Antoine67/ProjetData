@@ -45,7 +45,13 @@ algos_metaheuristic = [
 
 def main():
     
-    
+    display_statistics([{'name':'Temps execution en fonction des solutions',
+                         'specification':3,
+                         'dataset_name':'A-n33-k6'},
+                        {'name':'Temps execution en fonction des solutions',
+                         'specification':4,
+                         'dataset_name':'A-n33-k6'}])
+    return
     displayMenu()
     return
     
