@@ -50,11 +50,11 @@ algos_metaheuristic = [
 def main():
     
 
-    '''displayMenu()
+    displayMenu()
     return
     
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
-    '''
+    
     
     vehicules_nb,cities_nb = 5, 30
     mat = random_adjacency_matrix_with_model(cities_nb,7,10)
