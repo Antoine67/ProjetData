@@ -21,7 +21,10 @@ collection_stats_vehicules_model = db['collection_stats_vehicules_model']
 
 
 def get_prediction(num_arete, hour, minutes = 0):
-    
+    m = (hour <= 9  or hour >7)
+    s = (hour <= 19 or hour >17)
+    creneau = 0 if m else 1
+    pred = collection_stats_vehicules_model.find{''}
 
 def create_and_store_stats_model:
     
