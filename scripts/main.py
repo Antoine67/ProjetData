@@ -46,7 +46,7 @@ algos_metaheuristic = [
    routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH,
    routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING,
 ]
-
+@profile
 def main():
     
 
@@ -74,7 +74,7 @@ def main():
                            2350,2400,2450,2500]
 
     """
-
+    
     if cvrpOrVrp == 'vrp':
         # VRP
         vrp = VRP(vehicules_nb,cities_nb)
