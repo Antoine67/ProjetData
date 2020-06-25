@@ -56,7 +56,7 @@ def displayMenu():
     statistics_executions_menu.append_item(FunctionItem("Execution(s) / Nb villes", call_stats, ["TIMECITIES"]))
 
     statistics_display_menu = ConsoleMenu("Sélectionnez une action :", "Projet Data - DIDIER PIQUE HAAS EKOBE MOHR")
-    statistics_display_menu.append_item(FunctionItem("Afficher des graphique", call_display_stats, ["TIMESOLUTIONS"]))
+    statistics_display_menu.append_item(FunctionItem("Afficher des graphique", call_display_stats, []))
    
 
     
@@ -215,7 +215,7 @@ def call_stats(arg1):
     print('Appuyez sur entrée pour continuer...')
     input()
         
-def call_display_stats(arg1):
+def call_display_stats():
 
     addNewGraph = True
     arrayToDisplay = []
