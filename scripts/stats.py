@@ -81,7 +81,7 @@ def execution_time_vehicules(algos, vrp, vehicules_nb, dataset_name):
 
 
 
-def execution_time_cities(algos, vrp, cities_nb):
+def execution_time_cities(algos, vrp, cities_nb, dataset_name):
     solutionLimit = 100
     stats_strategy = []
     stats_x = []
@@ -106,7 +106,7 @@ def execution_time_cities(algos, vrp, cities_nb):
         stats_y.append(temp_stats_y)
         
 
-    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de ville', 'Temps (s)', stats_strategy, 'A-n33-k6')    
+    insert_multiple_stats(stats_x, stats_y, 'Temps execution en fonction du nombre de ville', 'Nombre de ville', 'Temps (s)', stats_strategy, dataset_name)    
 
 
 
