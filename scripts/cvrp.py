@@ -174,6 +174,8 @@ class CVRP:
             
         search_parameters.log_search = True
         
+        search_parameters.time_limit.seconds = 100
+        
         # Solve the problem.
         solution = routing.SolveWithParameters(search_parameters)
 

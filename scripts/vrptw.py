@@ -87,7 +87,7 @@ class VRPTW:
         
     def pass_matrix(self, matrix, timewindows):
         data = {}
-        data['distance_matrix'] = matrix
+        data['time_matrix'] = matrix
         data['time_windows'] = timewindows
         data['num_vehicles'] = self.k
         data['depot'] = self.depot 

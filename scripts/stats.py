@@ -125,7 +125,7 @@ def execution_quality_cities(algos, vrp, cities_nb, dataset_name, cost):
 
 
         temp_stats_x.append(cities_nb)
-        temp_stats_y.append(solution[1] - cost)
+        temp_stats_y.append(abs(solution[1]/cost)) # en pourcentage
         stats_strategy.append(strategy)
         
         stats_x.append(temp_stats_x)

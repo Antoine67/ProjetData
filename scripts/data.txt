@@ -1,0 +1,11 @@
+../data/A-VRP/A-n45-k7.vrp ../data/A-VRP-sol/opt-A-n45-k7
+../data/A-VRP/A-n46-k7.vrp ../data/A-VRP-sol/opt-A-n46-k7
+../data/A-VRP/A-n48-k7.vrp ../data/A-VRP-sol/opt-A-n48-k7
+../data/A-VRP/A-n53-k7.vrp ../data/A-VRP-sol/opt-A-n53-k7
+../data/A-VRP/A-n54-k7.vrp ../data/A-VRP-sol/opt-A-n54-k7
+../data/A-VRP/B-n44-k7.vrp ../data/A-VRP-sol/opt-B-n44-k7
+../data/A-VRP/B-n50-k7.vrp ../data/A-VRP-sol/opt-B-n50-k7
+../data/A-VRP/B-n51-k7.vrp ../data/A-VRP-sol/opt-B-n51-k7
+../data/A-VRP/B-n52-k7.vrp ../data/A-VRP-sol/opt-B-n52-k7
+../data/A-VRP/B-n56-k7.vrp ../data/A-VRP-sol/opt-B-n56-k7
+../data/A-VRP/B-n57-k7.vrp ../data/A-VRP-sol/opt-B-n57-k7
