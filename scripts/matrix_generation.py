@@ -22,6 +22,9 @@ collection_average_trafic = db['average_trafics']
 """Random adjacency matrix of given size"""
 def random_adjacency_matrix(length, minWeight = 1, maxWeight = 10, time = 0):
     
+    tab = []
+    
+
     if 7<=time<=9:
         window="avg_matin"
     elif 17<=time<=19:
@@ -33,8 +36,15 @@ def random_adjacency_matrix(length, minWeight = 1, maxWeight = 10, time = 0):
         arete_trafic = list(db.average_trafics.aggregate([{"$match": { "num_arete" : str(num_arete+1)} } ]))
         trafics_jour = [trafic[window] for trafic in arete_trafic]
         
-        print(int(random.uniform(int(trafics_jour[0])-(int(trafics_jour[0])*0.1),int(trafics_jour[0])+(int(trafics_jour[0])*0.1))))
+        tab.append(int(random.uniform(int(trafics_jour[0])-(int(trafics_jour[0])*0.1),int(trafics_jour[0])+(int(trafics_jour[0])*0.1))))
+    
+    tab2d = np.array(tab)
+    b = tab2d.transpose().copy()
+    b.resize((23,23), refcheck=False)
+    b = tab2d.transpose()
+    print(b[0])
+        
 
     
 
-print(random_adjacency_matrix(500,1,5,17))
+random_adjacency_matrix(500,1,5,17)
