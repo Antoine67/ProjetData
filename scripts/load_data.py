@@ -38,9 +38,22 @@ def get_particular_info(path, string):
     with open(path, 'r') as f:
         lines = list(map(lambda l: l.replace('\n', '').split(), f.readlines()))
         for line in lines:
-            if string == line[0]:
+            if len(line) != 0 and string == line[0]:
                 return int(line[-1])
         return None
+
+def get_all_path(path):
+    
+    returnArray = []
+    with open(path, 'r') as f:
+        lines = list(map(lambda l: l.replace('\n', '').split(), f.readlines()))
+        for line in lines:
+            comboArray = []
+            
+            comboArray.append(line[0])
+            comboArray.append(line[1])
+            returnArray.append(comboArray)
+        return returnArray
     
 def get_data(cities_coords):
     length = len(cities_coords)

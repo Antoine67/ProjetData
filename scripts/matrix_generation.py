@@ -21,6 +21,7 @@ def random_adjacency_matrix_with_model(length, hour, minute):
             tab[i][j] = pred
             tab[j][i] = pred
             
+    return tab
     #print(tab)
             
 """ 

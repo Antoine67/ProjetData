@@ -7,6 +7,7 @@ Created on Mon Jun 22 15:00:48 2020
 
 from vrp import VRP
 from cvrp import CVRP
+from vrptw import VRPTW
 from ortools.constraint_solver import routing_enums_pb2
 from load_data import from_file_to_adj_matr
 from load_data import get_particular_info
@@ -29,7 +30,8 @@ from matrix_generation import random_adjacency_matrix_with_model
 timeout = 15 # in s
 
 cvrpOrVrp = 'vrp'
-random = True
+
+random = False
 
 """
 AUTOMATIC            	Lets the solver select the metaheuristic.
@@ -56,6 +58,8 @@ def main():
     
     vehicules_nb,cities_nb = 5, 30
     mat = random_adjacency_matrix_with_model(cities_nb,7,10)
+    
+    print(mat)
     
     
     """
@@ -90,12 +94,20 @@ def main():
             vrp.pass_matrix(mat, demand_matrix,capacity)
         #print(vrp.data)
 
+    elif cvrpOrVrp == 'vrptw':
+        # CVRP
+        vrp = VRPTW(vehicules_nb,cities_nb)
+        if random:
+            vrp.create_data_model()
+        else:
+            vrp.pass_matrix(mat, demand_matrix,capacity)
+        #print(vrp.data)
+
     # Résoud le problème du VRP/CVRP
     
     for strategy in algos_metaheuristic:
-            solution = vrp.solve(strategy, timeout, useTimeout=True)
-            if not random:
-                print("Solution attendue : " + str(cost))
+
+            solution = vrp.solve(strategy, timeout)
             print("Solution obtenue : " + str(solution[1]))
             print(solution)
         
@@ -108,9 +120,8 @@ def main():
     execution_time_vehicules(algos, vrp, vehicules_nb)
     """
     
-    """
     # Afficher des statistiques
-    
+    """
     display_statistics([{'name':'Temps execution en fonction des solutions',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
