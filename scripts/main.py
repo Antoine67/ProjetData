@@ -25,10 +25,13 @@ from tqdm import tqdm
 
 from menu import displayMenu
 
+from matrix_generation import random_adjacency_matrix_with_model
+
 timeout = 15 # in s
 
-cvrpOrVrp = 'vrptw'
-random = True
+cvrpOrVrp = 'vrp'
+
+random = False
 
 """
 AUTOMATIC            	Lets the solver select the metaheuristic.
@@ -53,7 +56,13 @@ def main():
     mat, capacity, cities_nb, vehicules_nb, demand_matrix, coords = from_file_to_adj_matr('../data/A-VRP/A-n33-k6.vrp')
     
     
+    vehicules_nb,cities_nb = 5, 30
+    mat = random_adjacency_matrix_with_model(cities_nb,7,10)
     
+    print(mat)
+    
+    
+    """
     cost = get_particular_info('../data/A-VRP-sol/opt-A-n32-k5', 'cost')
 
     solutionsLimitArray = [50,100,150,200,250,300,350,400,450,
@@ -64,7 +73,7 @@ def main():
                            2000,2050,2100,2150,2200,2250,2300,
                            2350,2400,2450,2500]
 
-    
+    """
 
     if cvrpOrVrp == 'vrp':
         # VRP
@@ -97,9 +106,8 @@ def main():
     # Résoud le problème du VRP/CVRP
     
     for strategy in algos_metaheuristic:
+
             solution = vrp.solve(strategy, timeout)
-            if not random:
-                print("Solution attendue : " + str(cost))
             print("Solution obtenue : " + str(solution[1]))
             print(solution)
         
@@ -110,13 +118,10 @@ def main():
     execution_time_solutions(algos_metaheuristic, vrp, solutionsLimitArray)
     execution_time_solutions(algos, vrp, solutionsLimitArray)
     execution_time_vehicules(algos, vrp, vehicules_nb)
-    
-    for i in tqdm(range(100)):
-        vrp.vehicules_nb = i
-        execution_time_vehicules(algos_metaheuristic, vrp, vehicules_nb)
+    """
     
     # Afficher des statistiques
-    
+    """
     display_statistics([{'name':'Temps execution en fonction des solutions',
                          'specification':3,
                          'dataset_name':'A-n33-k6'},
